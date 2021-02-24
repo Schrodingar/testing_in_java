@@ -17,7 +17,7 @@ public class FileProvider{
             FileReader fileReader = new FileReader(filePath);
             BufferedReader reader = new BufferedReader(fileReader);
             String line;
-            String lineSeparator = System.getProperty("line.separator");
+            String lineSeparator = "\n";
             StringBuilder fileContent = new StringBuilder();
             while ((line = reader.readLine() ) != null ) {
                 fileContent.append(line);
@@ -32,7 +32,7 @@ public class FileProvider{
     public void writeMessage(String filePath, String message) {
         FileWriter writer = null;
         try {
-            writer = new FileWriter(filePath, true);
+            writer = new FileWriter(filePath, false);
             writer.append(message);
             writer.append("\r\n");
             writer.flush();

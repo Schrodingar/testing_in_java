@@ -1,22 +1,14 @@
-import messagegenerator.MessageGenerator;
-import messagegenerator.MessageType;
-import providers.ConsoleProvider;
-import providers.FileProvider;
+import modes.ModeExecution;
 
 public class Main {
 
     public static void main(String[] args) {
-        MessageGenerator messageGenerator = new MessageGenerator();
-        String message = null;
-        if (System.getenv("inputType").equals("file")) {
-            FileProvider fileProvider = new FileProvider();
-            message = messageGenerator.createMessageByType(MessageType.INFORM, fileProvider.getData("src/main/resources/inputData"));
-            fileProvider.writeMessage("src/main/resources/outputData", message);
+        String inputType = System.getenv("inputType");
+        if (inputType.equals("file")) {
+            ModeExecution.fileMod("src/main/resources/inputData", "src/main/resources/outputData");
         }
-        else if (System.getenv("inputType").equals("console")) {
-            ConsoleProvider consoleProvider = new ConsoleProvider();
-            message = messageGenerator.createMessageByType(MessageType.INFORM, consoleProvider.getData());
-            consoleProvider.writeMessage(message);
+        else if (inputType.equals("console")) {
+            ModeExecution.consoleMod();
 
 
         }
