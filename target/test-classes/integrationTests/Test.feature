@@ -1,7 +1,6 @@
 @Integration
 
 Feature: integration test
-
   Scenario Outline: Integration test
     Given Run application in file mod
       | inputFile  | <inputFile>  |

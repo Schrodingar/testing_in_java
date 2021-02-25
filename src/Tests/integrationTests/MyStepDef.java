@@ -4,12 +4,20 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import modes.ModeExecution;
 import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
+import rules.RuleTemporaryFolder;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.Map;
 
 public class MyStepDef {
+
+    @Rule
+    TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Given("Run application in file mod")
     public void runApplicationInFileMod(Map<String, String> exampleTable) {
@@ -19,7 +27,7 @@ public class MyStepDef {
     }
 
     @Then("Verify, that file contains text")
-    public void verifyFileContent(Map<String, String> exampleTable) {
+    public void verifyFileContent(Map<String, String> exampleTable) throws IOException {
         FileReader fileReader = null;
         StringBuilder fileContent = null;
         String lineSeparator = "\n";
@@ -38,8 +46,7 @@ public class MyStepDef {
         }
         String actualContent = fileContent.toString();
         String expectedContent = exampleTable.get("message");
-        System.out.println(expectedContent);
-        System.out.println(actualContent);
+        RuleTemporaryFolder.writeInTemporaryFolder("Actual - " + actualContent + "\n" + "Expected - " + expectedContent);
         Assert.assertEquals(expectedContent, actualContent);
     }
 }
